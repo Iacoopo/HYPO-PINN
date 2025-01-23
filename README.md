@@ -1,60 +1,86 @@
-# HYPO-PINN
 
-## Overview
+# Hypocenter Prediction Using PINN, FNO, and PINO
 
-This project implements a Physics-Informed Neural Network (PINN) for hypocenter estimation. The goal is to combine machine learning techniques with domain-specific physical laws to create a robust system for estimating earthquake hypocenters using seismic data.
+This repository contains implementations of models for predicting the hypocenter of seismic events based on recorded travel times at receivers. These models utilize advanced machine learning techniques, including Physics-Informed Neural Networks (PINN), Fourier Neural Operators (FNO), and Physics-Informed Neural Operators (PINO).
 
-The notebook includes Python code, explanations, and results showcasing the development and application of the PINN model. This project leverages PyTorch for the neural network and introduces domain-specific formulations to ensure the model adheres to physical principles.
+## Repository Overview
 
----
+The repository includes the following files:
+
+* **`PINN.py`** : Implementation of a Physics-Informed Neural Network (PINN) that enforces the Eikonal equation as a physical constraint while learning to predict travel times and hypocenters.
+* **`FNO.py`** : Implementation of a Fourier Neural Operator (FNO) for hypocenter prediction using global frequency domain representation.
+* **`PINO.py`** : Implementation of a Physics-Informed Neural Operator (PINO) that integrates domain knowledge with neural operator frameworks for enhanced prediction accuracy.
 
 ## Features
 
-* **Physics-Informed Neural Network** : Integrates physical constraints into the loss function.
-* **Hypocenter Estimation** : Focused on solving geophysical problems related to earthquake hypocenter localization.
-* **PyTorch-Based Implementation** : Uses PyTorch for ease of customization and scalability.
-* **Visualizations** : Includes explanations and visualizations to aid understanding.
+* **Physics-Informed Learning** : The models incorporate domain knowledge through physical laws (e.g., the Eikonal equation), enabling accurate predictions with limited data.
+* **Neural Operator Frameworks** : FNO and PINO enable efficient learning of high-dimensional mappings, making them suitable for complex seismic velocity models.
+* **3D Hypocenter Localization** : Predicts the three-dimensional source location of seismic events.
 
----
+## Installation
 
-## PINN Structure and Technical Details
+To use the models, ensure the following dependencies are installed:
 
-The Physics-Informed Neural Network (PINN) in this project is designed as follows:
+* Python 3.8+
+* PyTorch
+* NumPy
+* SciPy
+* Matplotlib
+* Neural Operator library (`neuralop`)
+* scikit-fmm (`skfmm`)
 
-### Network Architecture
+Install the required packages:
 
-* The network comprises several fully connected layers with non-linear activation functions.
-* Input features include seismic data attributes such as arrival times and station coordinates.
-* The output predicts the hypocenter coordinates (latitude, longitude, depth) and the origin time.
+```bash
+pip install -r requirements.txt
+```
 
-### Loss Functions
+## Usage
 
-* **Physics-Based Loss** : Ensures the network predictions adhere to the seismic wave propagation equations derived from the physics of wave travel.
-* **Data Loss** : Compares predicted values with observed data (e.g., arrival times) using mean squared error.
-* **Regularization Loss** : Helps prevent overfitting by penalizing large weights in the network.
+### Data Preparation
 
-### Training Details
+Each script includes routines to prepare synthetic data, including:
 
-* The model is trained using backpropagation with gradient descent optimizers (e.g., Adam).
-* A combination of synthetic and observed seismic data is used for training and validation.
-* Batch normalization and dropout layers are incorporated to improve generalization.
+* **Velocity Models** : 3D seismic velocity grids.
+* **Travel Times** : Synthetic travel time fields computed using Fast Marching Methods.
+* **Receiver Data** : Partial travel times recorded at predefined receiver locations.
 
----
+### Training Models
 
-## Results
+Run the respective scripts to train models:
 
-The project demonstrates:
+* Train PINN:
+  ```bash
+  python PINN.py
+  ```
+* Train FNO:
+  ```bash
+  python FNO.py
+  ```
+* Train PINO:
+  ```bash
+  python PINO.py
+  ```
 
-* Accurate hypocenter localization using the PINN approach.
-* Comparisons with traditional methods.
-* Visualization of model predictions and error distributions.
+### Visualization
 
----
+The scripts include visualization utilities to compare true and predicted source locations in 3D.
 
-## Acknowledgments
+### Evaluation
 
-* Theoretical basis inspired by [Laplace Hypopinn](https://arxiv.org/abs/2205.14439).
+Evaluate models on validation datasets by running the corresponding evaluation functions included in each script.
 
----
+## Models Summary
 
-Feel free to reach out if you have any questions or issues!
+1. **PINN** : Implements physics-informed constraints directly in the loss function for accurate learning with limited data.
+2. **FNO** : Leverages Fourier transformations to efficiently learn mappings from velocity models to hypocenters.
+3. **PINO** : Extends FNO with additional physical constraints for robust predictions in noisy environments.
+
+## Examples
+
+* Generate synthetic seismic data with varying velocity models and noise levels.
+* Predict hypocenters and compare model performance using validation metrics like MSE.
+
+## Citation
+
+If you use this repository in your research, please cite the relevant papers and frameworks that inspired its development.

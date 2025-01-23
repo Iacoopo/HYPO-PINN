@@ -1,0 +1,9 @@
+torch>=1.10.0
+numpy>=1.21.0
+scipy>=1.7.0
+matplotlib>=3.4.0
+tqdm>=4.62.0
+neuralop  # Install from its official source or repository if not available on PyPI
+scikit-fmm>=0.0.10
+torchinfo>=1.6.0
+torchviz>=0.0.2
